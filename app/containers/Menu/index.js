@@ -28,21 +28,24 @@ const Header = styled.header`
   text-align: center;
   width: 100%;
   margin: auto;
-  padding: 1em;
+  padding: 0.5em;
   font-size: 150%;
 `;
 
 const Main = styled.div`
   flex: 1;
+  padding-bottom: 3em;
 `;
 
 const Footer = styled.footer`
   position: fixed;
   left: 0;
   bottom: 0;
-  height: auto;
   width: 100%;
-  padding: 1em;
+  height: 3em;
+  line-height: 3em;
+  white-space: nowrap;
+  padding-left: 1em;
   background: white;
   border: 1px solid black;
 `;
@@ -64,11 +67,15 @@ export class Menu extends React.PureComponent { // eslint-disable-line react/pre
             { name: 'description', content: 'Description of Menu' },
           ]}
         />
-        <Header><FormattedMessage {...messages.header} /></Header>
+        <Header>
+          <FormattedMessage {...messages.header} />
+        </Header>
         <Main>
           <MenuTable items={items} selected={selected} itemClick={itemClick} />
         </Main>
-        <Footer><Calculator sum={sum} /></Footer>
+        <Footer>
+          <Calculator sum={sum} />
+        </Footer>
       </Container>
     );
   }
