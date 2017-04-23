@@ -56,8 +56,8 @@ function updateCache(data) {
   return data;
 }
 
-function getTodayMenu(callback) {
-  if (cache.valid()) {
+function getTodayMenu(callback, withCahce = true) {
+  if (withCahce && cache.valid()) {
     callback(cache.data);
   } else {
     request(options)
