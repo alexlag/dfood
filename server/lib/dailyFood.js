@@ -47,13 +47,12 @@ function onErr() {
   return {};
 }
 
-function getTodayMenu(callback) {
-  request(options)
+function getMenu() {
+  return request(options)
     .then(extractData)
-    .catch(onErr)
-    .then(callback);
+    .catch(onErr);
 }
 
 module.exports = {
-  getTodayMenu,
+  getMenu,
 };
