@@ -12,6 +12,9 @@ const app = express();
 
 const api = require('./api');
 const db = require('./db');
+const runWorker = require('./worker');
+
+const POLLING_INTERVAL = 20 * 60 * 1000;
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 app.use('/api', api);
@@ -30,6 +33,9 @@ const prettyHost = customHost || 'localhost';
 const port = argv.port || process.env.PORT || 3000;
 
 function init() {
+  runWorker();
+  setInterval(runWorker, POLLING_INTERVAL);
+
   app.listen(port, host, (err) => {
     if (err) {
       return logger.error(err.message);
