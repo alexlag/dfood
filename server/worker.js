@@ -12,7 +12,6 @@ async function setToday() {
 }
 
 async function generateIntstances(data) {
-  console.log(data);
   const dishModels = await Promise.all(flatMap(data,
     (dishes, type) => dishes.map((dish) => getDish(dish, type))
   ));
