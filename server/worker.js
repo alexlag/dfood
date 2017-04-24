@@ -12,6 +12,7 @@ async function setToday() {
 }
 
 async function generateIntstances(data) {
+  console.log(data);
   const dishModels = await Promise.all(flatMap(data,
     (dishes, type) => dishes.map((dish) => getDish(dish, type))
   ));
@@ -21,7 +22,7 @@ async function generateIntstances(data) {
     defaults: { day, month, year },
   });
   await Promise.all(dishModels.map(({ instance, complex }) =>
-    menu.addDish(instance, { through: complex })));
+    menu.addDish(instance, { complex })));
   return menu;
 }
 
