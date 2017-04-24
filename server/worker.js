@@ -1,4 +1,5 @@
 const flatMap = require('lodash/flatMap');
+const hash = require('object-hash');
 const db = require('./db');
 const getMenu = require('./lib/dailyFood').getMenu;
 const getDate = require('./lib/utils').getDate;
@@ -12,17 +13,28 @@ async function setToday() {
 }
 
 async function generateIntstances(data) {
-  const dishModels = await Promise.all(flatMap(data,
-    (dishes, type) => dishes.map((dish) => getDish(dish, type))
-  ));
+  const responseHash = hash(data);
   const { day, month, year } = getDate();
-  const [menu] = await db.Menu.findOrCreate({
-    where: { day, month, year },
-    defaults: { day, month, year },
-  });
-  await Promise.all(dishModels.map(({ instance, complex }) =>
-    menu.addDish(instance, { complex })));
-  return menu;
+
+  let maybeMenu = await db.Menu.findOne({ where: { day, month, year, responseHash } });
+  if (maybeMenu) {
+    await maybeMenu.increment('counter');
+  } else {
+    maybeMenu = await db.Menu.create({
+      day,
+      month,
+      year,
+      responseHash,
+      counter: 1,
+    });
+    const dishModels = await Promise.all(flatMap(data,
+      (dishes, type) => dishes.map((dish) => getDish(dish, type))
+    ));
+
+    await Promise.all(dishModels.map(({ instance, complex }) =>
+      maybeMenu.addDish(instance, { complex })));
+  }
+  return maybeMenu;
 }
 
 async function getDish(dish, type) {

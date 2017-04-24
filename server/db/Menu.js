@@ -12,12 +12,24 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    responseHash: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    counter: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   }, {
     classMethods: {
       associate(models) {
         Menu.belongsToMany(models.Dish, { through: models.MenuDish });
       },
     },
+    indexes: [{
+      unique: true,
+      fields: ['day', 'month', 'year', 'responseHash'],
+    }],
   });
 
   return Menu;

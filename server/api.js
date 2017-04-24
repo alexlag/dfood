@@ -9,7 +9,8 @@ router.get('/today', async (req, res) => {
   const today = getDate();
   const { Dishes: data = [] } = await db.Menu.findOne({
     where: today,
-    attributes: [],
+    order: [['counter', 'DESC']],
+    attributes: ['counter'],
     include: [{
       model: db.Dish,
       through: { attributes: ['complex'] },
