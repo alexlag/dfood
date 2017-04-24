@@ -11,6 +11,7 @@ const resolve = require('path').resolve;
 const app = express();
 
 const api = require('./api');
+const db = require('./db');
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 app.use('/api', api);
@@ -28,22 +29,25 @@ const prettyHost = customHost || 'localhost';
 
 const port = argv.port || process.env.PORT || 3000;
 
+function init() {
+  app.listen(port, host, (err) => {
+    if (err) {
+      return logger.error(err.message);
+    }
+
+    // Connect to ngrok in dev mode
+    if (ngrok) {
+      ngrok.connect(port, (innerErr, url) => {
+        if (innerErr) {
+          return logger.error(innerErr);
+        }
+
+        logger.appStarted(port, prettyHost, url);
+      });
+    } else {
+      logger.appStarted(port, prettyHost);
+    }
+  });
+}
 // Start your app.
-app.listen(port, host, (err) => {
-  if (err) {
-    return logger.error(err.message);
-  }
-
-  // Connect to ngrok in dev mode
-  if (ngrok) {
-    ngrok.connect(port, (innerErr, url) => {
-      if (innerErr) {
-        return logger.error(innerErr);
-      }
-
-      logger.appStarted(port, prettyHost, url);
-    });
-  } else {
-    logger.appStarted(port, prettyHost);
-  }
-});
+db.sequelize.sync().then(init);

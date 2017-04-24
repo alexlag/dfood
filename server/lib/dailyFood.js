@@ -3,8 +3,6 @@ const cheerio = require('cheerio');
 const Iconv = require('iconv').Iconv;
 const translator = new Iconv('cp1251', 'utf-8');
 
-const Cache = require('./cache');
-
 const url = 'http://dailyfoodrussia.com/menu/stanislavskogo/';
 
 const form = {
@@ -49,25 +47,12 @@ function onErr() {
   return {};
 }
 
-const cache = new Cache();
-
-function updateCache(data) {
-  cache.update(data);
-  return data;
-}
-
-function getTodayMenu(callback) {
-  if (cache.valid()) {
-    callback(cache.data);
-  } else {
-    request(options)
-      .then(extractData)
-      .then(updateCache)
-      .catch(onErr)
-      .then(callback);
-  }
+function getMenu() {
+  return request(options)
+    .then(extractData)
+    .catch(onErr);
 }
 
 module.exports = {
-  getTodayMenu,
+  getMenu,
 };

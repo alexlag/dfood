@@ -31,10 +31,14 @@ function onItemClick(state, item) {
   return subresult.set('sum', calculateSum(subresult.get('selected')));
 }
 
+function updateOnItems(state, arr) {
+  return state.set('items', fromJS(arr).groupBy((v) => v.get('type')));
+}
+
 export default function items(state = initialState, action) {
   switch (action.type) {
     case SET_ITEMS:
-      return state.set('items', fromJS(action.payload));
+      return updateOnItems(state, action.payload);
     case ITEM_CLICK:
       return onItemClick(state, action.payload);
     default:
