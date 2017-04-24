@@ -2,7 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize(process.env.DATABASE_URL);
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  timezone: '+03:00',
+  logging: process.env.NODE_ENV !== 'production' && console.log,
+});
 
 const db = {};
 
