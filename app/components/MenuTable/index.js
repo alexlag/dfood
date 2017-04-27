@@ -4,7 +4,8 @@
 *
 */
 
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { fromJS, List } from 'immutable';
 
@@ -62,11 +63,13 @@ const buildEntry = (section, selected, itemClick) => (entry, idx) => Entry(secti
 function buildEntries(items, selected, itemClick) {
   return items.reduce((ac, entries, section) =>
     ac.push(Section(section))
-      .concat(entries.map(buildEntry(section, selected, itemClick))), new List()).toJS();
+      .concat(entries.map(buildEntry(section, selected, itemClick))), new List());
 }
 
 function Entry(section, selected, entry, idx, itemClick) {
-  const { complex, price, name } = entry.toJS();
+  const complex = entry.get('complex');
+  const price = entry.get('price');
+  const name = entry.get('name');
   const added = selected.includes(fromJS({ section, idx, price }));
   return (
     <Tr key={`${section}${idx}`} onClick={() => itemClick(section, idx, price)}>

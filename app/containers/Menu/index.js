@@ -4,7 +4,8 @@
  *
  */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
@@ -15,7 +16,7 @@ import MenuTable from 'components/MenuTable';
 import Calculator from 'components/Calculator';
 
 import { makeSelectMenuItems, makeSelectMenuPick, makeSelectMenuSum } from './selectors';
-import { itemClick } from './actions';
+import * as actions from './actions';
 import messages from './messages';
 
 const Container = styled.div`
@@ -94,8 +95,4 @@ const mapStateToProps = createStructuredSelector({
   sum: makeSelectMenuSum(),
 });
 
-const mapDispatchToProps = {
-  itemClick,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+export default connect(mapStateToProps, actions)(Menu);
