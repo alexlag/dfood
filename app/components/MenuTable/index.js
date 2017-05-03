@@ -7,7 +7,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { fromJS, List } from 'immutable';
+import { fromJS, List, Set } from 'immutable';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -117,8 +117,13 @@ class MenuTable extends PureComponent { // eslint-disable-line react/prefer-stat
 
 MenuTable.propTypes = {
   items: PropTypes.object.isRequired,
-  selected: PropTypes.object.isRequired,
-  itemClick: PropTypes.func.isRequired,
+  selected: PropTypes.object,
+  itemClick: PropTypes.func,
+};
+
+MenuTable.defaultProps = {
+  selected: new Set(),
+  itemClick: (f) => f,
 };
 
 export default MenuTable;

@@ -34,7 +34,7 @@ const Footer = styled.footer`
   border: 1px solid black;
 `;
 
-export class Menu extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class Today extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     const {
       items,
@@ -46,9 +46,9 @@ export class Menu extends React.PureComponent { // eslint-disable-line react/pre
     return (
       <Container>
         <Helmet
-          title="Menu"
+          title="Today Menu"
           meta={[
-            { name: 'description', content: 'Description of Menu' },
+            { name: 'description', content: 'Daily Food today menu' },
           ]}
         />
         <Main>
@@ -62,7 +62,7 @@ export class Menu extends React.PureComponent { // eslint-disable-line react/pre
   }
 }
 
-Menu.propTypes = {
+Today.propTypes = {
   itemClick: PropTypes.func.isRequired,
   items: PropTypes.object.isRequired,
   selected: PropTypes.object.isRequired,
@@ -75,4 +75,4 @@ const mapStateToProps = createStructuredSelector({
   sum: makeSelectMenuSum(),
 });
 
-export default connect(mapStateToProps, actions)(Menu);
+export default connect(mapStateToProps, actions)(Today);
