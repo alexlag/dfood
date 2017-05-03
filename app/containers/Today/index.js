@@ -1,13 +1,7 @@
-/*
- *
- * Menu
- *
- */
-
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
 
@@ -15,21 +9,11 @@ import MenuTable from 'components/MenuTable';
 import Calculator from 'components/Calculator';
 
 import { makeSelectMenuItems, makeSelectMenuPick, makeSelectMenuSum } from './selectors';
-import { itemClick } from './actions';
-import messages from './messages';
+import * as actions from './actions';
 
 const Container = styled.div`
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-`;
-
-const Header = styled.header`
-  text-align: center;
-  width: 100%;
-  margin: auto;
-  padding: 0.5em;
-  font-size: 150%;
 `;
 
 const Main = styled.div`
@@ -50,7 +34,7 @@ const Footer = styled.footer`
   border: 1px solid black;
 `;
 
-export class Menu extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class Today extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     const {
       items,
@@ -62,14 +46,11 @@ export class Menu extends React.PureComponent { // eslint-disable-line react/pre
     return (
       <Container>
         <Helmet
-          title="Menu"
+          title="Today Menu"
           meta={[
-            { name: 'description', content: 'Description of Menu' },
+            { name: 'description', content: 'Daily Food today menu' },
           ]}
         />
-        <Header>
-          <FormattedMessage {...messages.header} />
-        </Header>
         <Main>
           <MenuTable items={items} selected={selected} itemClick={itemClick} />
         </Main>
@@ -81,7 +62,7 @@ export class Menu extends React.PureComponent { // eslint-disable-line react/pre
   }
 }
 
-Menu.propTypes = {
+Today.propTypes = {
   itemClick: PropTypes.func.isRequired,
   items: PropTypes.object.isRequired,
   selected: PropTypes.object.isRequired,
@@ -94,8 +75,4 @@ const mapStateToProps = createStructuredSelector({
   sum: makeSelectMenuSum(),
 });
 
-const mapDispatchToProps = {
-  itemClick,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+export default connect(mapStateToProps, actions)(Today);

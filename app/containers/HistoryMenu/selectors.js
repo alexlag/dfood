@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 
 /**
- * Direct selector to the menu state domain
+ * Direct selector to the today state domain
  */
-const selectMenuDomain = () => (state) => state.get('menu');
+const selectMenuDomain = () => (state) => state.get('historyMenu');
 
 /**
  * Other specific selectors
@@ -11,16 +11,6 @@ const selectMenuDomain = () => (state) => state.get('menu');
 const makeSelectMenuItems = () => createSelector(
   selectMenuDomain(),
   (substate) => substate.get('items')
-);
-
-const makeSelectMenuPick = () => createSelector(
-  selectMenuDomain(),
-  (substate) => substate.get('selected')
-);
-
-const makeSelectMenuSum = () => createSelector(
-  selectMenuDomain(),
-  (substate) => substate.get('sum')
 );
 
 /**
@@ -36,6 +26,4 @@ export default makeSelectMenu;
 export {
   selectMenuDomain,
   makeSelectMenuItems,
-  makeSelectMenuPick,
-  makeSelectMenuSum,
 };

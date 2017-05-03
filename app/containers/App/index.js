@@ -12,18 +12,41 @@
  */
 
 import React from 'react';
+import styled from 'styled-components';
+import Navigation from 'containers/Navigation';
+import Routes from 'routes';
 
-export default class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+const Container = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Header = styled.header`
+  width: 100%;
+  margin: auto;
+`;
+
+const Main = styled.div`
+  flex: 1;
+`;
+
+export default class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
-    children: React.PropTypes.node,
+    store: React.PropTypes.object.isRequired,
   };
 
   render() {
     return (
-      <div className="container">
-        {React.Children.toArray(this.props.children)}
-      </div>
+      <Container>
+        <Header>
+          <Navigation />
+        </Header>
+        <Main>
+          <Routes store={this.props.store} />
+        </Main>
+      </Container>
     );
   }
 }
