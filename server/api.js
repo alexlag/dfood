@@ -39,6 +39,11 @@ router.get('/history', async (req, res) => {
     const all = await db.Menu.findAll({
       group: ['year', 'month', 'day'],
       attributes: ['year', 'month', 'day'],
+      order: [
+        ['year', 'DESC'],
+        ['month', 'DESC'],
+        ['day', 'DESC'],
+      ],
     });
     res.send(all);
   } catch (e) {
