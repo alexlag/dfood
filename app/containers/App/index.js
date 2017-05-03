@@ -12,17 +12,18 @@
  */
 
 import React from 'react';
+import Routes from 'routes';
 
 export default class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
-    children: React.PropTypes.node,
+    store: React.PropTypes.object.isRequired,
   };
 
   render() {
     return (
       <div className="container">
-        {React.Children.toArray(this.props.children)}
+        <Routes store={this.props.store} />
       </div>
     );
   }
