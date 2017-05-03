@@ -5,11 +5,9 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  SET_HISTORY,
 } from './constants';
 
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
+export function setHistory(payload) {
+  return { type: SET_HISTORY, payload };
 }

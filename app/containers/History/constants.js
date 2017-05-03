@@ -4,4 +4,4 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/History/DEFAULT_ACTION';
+export const SET_HISTORY = 'app/History/SET_HISTORY';

@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
-import makeSelectHistory from './selectors';
-import messages from './messages';
+
+import HistoryCalendar from 'components/HistoryCalendar';
+
+import { makeGroupedHistory } from './selectors';
 
 export class History extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -14,27 +15,21 @@ export class History extends React.PureComponent { // eslint-disable-line react/
         <Helmet
           title="History"
           meta={[
-            { name: 'description', content: 'Description of History' },
+            { name: 'description', content: 'Available DailyFood menu history' },
           ]}
         />
-        <FormattedMessage {...messages.header} />
+        <HistoryCalendar history={this.props.history} />
       </div>
     );
   }
 }
 
 History.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  History: makeSelectHistory(),
+  history: makeGroupedHistory(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(History);
+export default connect(mapStateToProps)(History);

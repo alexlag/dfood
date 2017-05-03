@@ -6,15 +6,15 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  SET_HISTORY,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS([]);
 
 function historyReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case SET_HISTORY:
+      return fromJS(action.payload);
     default:
       return state;
   }

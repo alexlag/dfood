@@ -1,11 +1,20 @@
-// import { take, call, put, select } from 'redux-saga/effects';
+import { call, put, spawn } from 'redux-saga/effects';
 
-// Individual exports for testing
-export function* defaultSaga() {
-  // See example in containers/HomePage/sagas.js
+import * as API from 'api/main';
+import { setHistory } from './actions';
+
+export function* getItems() {
+  const response = yield call(API.history);
+  if (response.data) {
+    yield put(setHistory(response.data));
+  }
+}
+
+export function* mainFlow() {
+  yield spawn(getItems);
 }
 
 // All sagas to be loaded
 export default [
-  defaultSaga,
+  mainFlow,
 ];
