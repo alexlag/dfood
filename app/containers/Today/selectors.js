@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 
 /**
- * Direct selector to the menu state domain
+ * Direct selector to the today state domain
  */
-const selectMenuDomain = () => (state) => state.get('menu');
+const selectMenuDomain = () => (state) => state.get('today');
 
 /**
  * Other specific selectors

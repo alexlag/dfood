@@ -1,14 +1,7 @@
-/*
- *
- * Menu
- *
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
 
@@ -17,20 +10,10 @@ import Calculator from 'components/Calculator';
 
 import { makeSelectMenuItems, makeSelectMenuPick, makeSelectMenuSum } from './selectors';
 import * as actions from './actions';
-import messages from './messages';
 
 const Container = styled.div`
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-`;
-
-const Header = styled.header`
-  text-align: center;
-  width: 100%;
-  margin: auto;
-  padding: 0.5em;
-  font-size: 150%;
 `;
 
 const Main = styled.div`
@@ -68,9 +51,6 @@ export class Menu extends React.PureComponent { // eslint-disable-line react/pre
             { name: 'description', content: 'Description of Menu' },
           ]}
         />
-        <Header>
-          <FormattedMessage {...messages.header} />
-        </Header>
         <Main>
           <MenuTable items={items} selected={selected} itemClick={itemClick} />
         </Main>
